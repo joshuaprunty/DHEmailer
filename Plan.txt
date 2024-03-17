@@ -1,0 +1,37 @@
+//=========================================================================================================
+ScrapeDOC.py
+--------------------------------------------------------------------------------------
+
+- Write output to database, rather than local JSON
+    - Alter output schema/format, if needed
+
+- Restructure to class-based format
+    - Not particularly demanded by this scale of file, but do for practice anyway
+
+//=========================================================================================================
+
+
+
+//=========================================================================================================
+Flowchart
+--------------------------------------------------------------------------------------
+
+- Within cloud service, scheduled (e.g. AWS Lambda)
+    - Once Daily at ~6am (Placeholder time):
+        - Run ScrapeDoc.py
+        - Write json result to cloud database (Atlas?)
+    - Daily, after meal data is written
+        - For each user in users data table
+            - Run SendEmails.py
+
+- Within cloud service, on event [User Data Update]
+    - Write update to users json file
+    - Resend email immediately for updated user
+
+- Website
+    - Static(?) page in ReactJS
+    - User authentication functionality via Firebase
+    - Simple form(s) for subscribe, unsubscribe, update preferences
+    - Send user data to users json database
+
+//=========================================================================================================

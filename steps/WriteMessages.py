@@ -2,12 +2,13 @@ import json
 
 def writeMessages():
     
+    # Get User and Meal Data
     with open('/Users/joshprunty/Desktop/DHEmailer/data/users.json', 'r') as usrs:
         userData = json.load(usrs)
-
     with open('/Users/joshprunty/Desktop/DHEmailer/data/meals.json','r') as meals:
         mealData = json.load(meals)
 
+    # Initialize Messages json schema
     messages = {}
 
     for user in userData:
