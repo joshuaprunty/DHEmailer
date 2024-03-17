@@ -4,12 +4,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import json
+import boto3
 
-def Scrape():  
+
+def Scrape():
 
     # List of Dining Halls as strings
     halls = ['allison', 'sargent', 'plexWest', 'plexEast', 'elder']
-    
+
     # JSON Wireframe for output.
     output = {
         'allison': {
@@ -40,7 +42,7 @@ def Scrape():
 
     # DineOnCampus URL
     url = 'https://dineoncampus.com/northwestern/whats-on-the-menu'
-    
+
     # Setup webdriver.
     # Get URL.
     driver = webdriver.Chrome()
@@ -118,12 +120,24 @@ def Scrape():
                 tags = doc.find_all('strong')
                 for tag in tags:
                     output[hall][meal[0]].append(tag.text)
-    
+
     # Kill the webdriver
     driver.quit()
 
     # Output now holds our full scraped data - write it as-is to meals.json.
-    with open('/Users/joshprunty/Desktop/Programming/DHEmailer/data/meals.json', 'w') as file:
-        json.dump(output, file)
+    json_data = json.dumps(output)
 
-Scrape()
+    s3_client = boto3.client('s3')
+
+    bucket_name = 'diningscraper'
+    key = 'usrmeal/meals.json'  
+
+    # Write the JSON data to meals.json in your S3 bucket
+    s3_client.put_object(Bucket=bucket_name, Key=key, Body=json_data, ContentType='application/json')
+
+def lambda_handler(event, context):
+    Scrape()
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Scrape Successful!')
+    }

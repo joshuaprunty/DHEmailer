@@ -4,5 +4,17 @@
     "email": "joshprunty@gmail.com",
     "halls": ["elder", "allison"],
     "meals": ["breakfast", "dinner"]
+  },
+  {
+    "name": "Placeholder Name",
+    "email": "placeholder@gmail.com",
+    "halls": ["sargent", "allison"],
+    "meals": ["breakfast"]
+  },
+  {
+    "name": "Test Guy",
+    "email": "tester@gmail.com",
+    "halls": ["elder"],
+    "meals": ["breakfast", "lunch", "dinner"]
   }
 ]
